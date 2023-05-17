@@ -5,7 +5,10 @@
       <map>
         <entry key="app/src/main/res/drawable/ic_capture.xml" value="0.186" />
         <entry key="app/src/main/res/layout/activity_camera.xml" value="0.23125" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.183984375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.20973815917968752" />
+        <entry key="app/src/main/res/layout/activity_menu_camera.xml" value="0.2453125" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.2453125" />
         <entry key="app/src/main/res/xml/file_paths.xml" value="0.2453125" />
       </map>
     </option>

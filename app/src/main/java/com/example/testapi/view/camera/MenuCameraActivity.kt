@@ -1,4 +1,4 @@
-package com.example.testapi
+package com.example.testapi.view.camera
 
 import android.content.Intent
 import android.os.Build
@@ -13,17 +13,18 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.example.testapi.databinding.ActivityCameraBinding
+import com.example.testapi.createFile
+import com.example.testapi.databinding.ActivityMenuCameraBinding
 
-class CameraActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityCameraBinding
+class MenuCameraActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMenuCameraBinding
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private var imageCapture: ImageCapture? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityCameraBinding.inflate(layoutInflater)
+        binding = ActivityMenuCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.captureImage.setOnClickListener { takePhoto() }
@@ -52,7 +53,7 @@ class CameraActivity : AppCompatActivity() {
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
                     Toast.makeText(
-                        this@CameraActivity,
+                        this@MenuCameraActivity,
                         "Gagal mengambil gambar.",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -65,7 +66,7 @@ class CameraActivity : AppCompatActivity() {
                         "isBackCamera",
                         cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA
                     )
-                    setResult(MainActivity.CAMERA_X_RESULT, intent)
+                    setResult(CameraActivity.CAMERA_X_RESULT, intent)
                     finish()
                 }
             }
@@ -96,7 +97,7 @@ class CameraActivity : AppCompatActivity() {
 
             } catch (exc: Exception) {
                 Toast.makeText(
-                    this@CameraActivity,
+                    this@MenuCameraActivity,
                     "Gagal memunculkan kamera.",
                     Toast.LENGTH_SHORT
                 ).show()

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">TestAPI</string>
 
+    <string name="nama">Nama</string>
+
     <string name="result">Result</string>
     <string name="take_picture">Take Picture</string>
 
@@ -8,4 +10,10 @@
     <string name="camera">Kamera</string>
     <string name="gallery">Galeri</string>
     <string name="upload">Unggah</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="register_description">Lengkapi data diri Anda</string>
 </resources>

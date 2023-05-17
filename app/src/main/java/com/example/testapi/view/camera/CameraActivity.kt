@@ -1,4 +1,4 @@
-package com.example.testapi
+package com.example.testapi.view.camera
 
 import android.Manifest
 import android.content.Intent
@@ -14,7 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.example.testapi.databinding.ActivityMainBinding
+import com.example.testapi.*
+import com.example.testapi.databinding.ActivityCameraBinding
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -24,19 +25,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
-class MainActivity : AppCompatActivity() {
+class CameraActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityCameraBinding
     private lateinit var currentPhotoPath: String
 
     private var getFile: File? = null
-
-    companion object {
-        const val CAMERA_X_RESULT = 200
-
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-        private const val REQUEST_CODE_PERMISSIONS = 10
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -62,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         if (!allPermissionsGranted()) {
@@ -93,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 
         createCustomTempFile(application).also {
             val photoURI: Uri = FileProvider.getUriForFile(
-                this@MainActivity,
+                this@CameraActivity,
                 "com.example.testapi",
                 it
             )
@@ -104,7 +98,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startCameraX() {
-        val intent = Intent(this, CameraActivity::class.java)
+        val intent = Intent(this, MenuCameraActivity::class.java)
         launcherIntentCameraX.launch(intent)
     }
 
@@ -150,7 +144,7 @@ class MainActivity : AppCompatActivity() {
             val selectedImg = result.data?.data as Uri
 
             selectedImg.let { uri ->
-                val myFile = uriToFile(uri, this@MainActivity)
+                val myFile = uriToFile(uri, this@CameraActivity)
                 getFile = myFile
                 binding.previewImageView.setImageURI(uri)
             }
@@ -180,18 +174,26 @@ class MainActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val responseBody = response.body()
                         if (responseBody != null && !responseBody.error) {
-                            Toast.makeText(this@MainActivity, responseBody.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@CameraActivity, responseBody.message, Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        Toast.makeText(this@MainActivity, response.message(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@CameraActivity, response.message(), Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
-                    Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CameraActivity, t.message, Toast.LENGTH_SHORT).show()
                 }
             })
         } else {
-            Toast.makeText(this@MainActivity, "Silakan masukkan berkas gambar terlebih dahulu.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@CameraActivity, "Silakan masukkan berkas gambar terlebih dahulu.", Toast.LENGTH_SHORT).show()
         }
     }
+
+    companion object {
+        const val CAMERA_X_RESULT = 200
+
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private const val REQUEST_CODE_PERMISSIONS = 10
+    }
+
 }
