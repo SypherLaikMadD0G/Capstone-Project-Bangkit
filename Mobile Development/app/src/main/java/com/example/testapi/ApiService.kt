@@ -21,7 +21,7 @@ data class FileUploadResponse(
 
 interface ApiService {
     @Multipart
-    @POST("/v1/stories/guest")
+    @POST("/upload")
     fun uploadImage(
         @Part file: MultipartBody.Part,
         @Part("description") description: RequestBody,
@@ -36,7 +36,7 @@ class ApiConfig {
             .addInterceptor(loggingInterceptor)
             .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://story-api.dicoding.dev/")
+            .baseUrl("https://imgapi-66o65w2gbq-et.a.run.app")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
